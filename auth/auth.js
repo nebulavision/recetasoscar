@@ -1,10 +1,27 @@
 import { supabase } from '../config/supabase.js';
 
+function getCallbackBaseUrl(){
+    const { origin, pathname } = window.location;
+
+    // En localhost o 127.0.0.1
+    if(origin.includes("localhost") || origin.includes("127.0.0.1")) {
+        return origin;
+    }
+
+    // En GitHubPages
+    const parts = pathname.split("/").filter(Boolean);
+    if(parts.length > 0) {
+        return origin + "/" + parts[0];
+    } else {
+        return origin
+    }
+}
+
 export async function signInWithGoogle() {
     const { data, error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
         options: {
-            redirectTo: `${window.location.origin}/auth/callback.html`,
+            redirectTo: getCallbackBaseUrl(),
             queryParams: {
                 prompt: 'select_account'
             }
