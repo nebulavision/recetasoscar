@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Recetas | Repostería</title>
+  <link rel="stylesheet" href="css/index.css">
+  <script type="module" src="scripts/index.js"></script>
+</head>
+<body>
+  <header>
+    <div>
+      <h1>Recetas con Amor ❤️</h1>
+      <p>Explora nuestras deliciosas categorías</p>
+    </div>
+    <div>
+      <a id="logout-btn" class="btn">Cerrar sesión</a>
+    </div>
+    
+  </header>
+
+  <!-- 🔹 Breadcrumbs -->
+  <nav class="breadcrumbs" id="breadcrumbs"></nav>
+
+  <main>
+    <div class="grid" id="categorias-grid"></div>
+
+    <!-- Modal Nueva Categoría -->
+    <div id="modal-categoria" class="modal hidden">
+      <div class="modal-content">
+        <h2>Nueva Categoría</h2>
+        <form id="form-categoria">
+          <label>
+            Nombre:
+            <input type="text" id="categoria-nombre" required>
+          </label>
+          <label>
+            Imagen:
+            <input type="file" id="categoria-imagen" accept="image/*" required>
+          </label>
+          <div class="modal-actions">
+            <button type="button" id="cancelar-btn" class="btn secondary">Cancelar</button>
+            <button type="submit" class="btn">Guardar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </main>
+</body>
+</html>

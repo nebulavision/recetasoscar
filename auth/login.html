@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login | Recetas con Amor ❤️</title>
+  <link rel="stylesheet" href="../css/login.css">
+</head>
+<body>
+  <div class="card login-card">
+    <div class="card-content" style="text-align: center;">
+      <h1>🍴 Recetas con Amor</h1>
+      <p>Inicia sesión con Google para continuar</p>
+
+      <!-- Botón simulado de Google -->
+      <button class="google-btn" id="google-login">
+        <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google">
+         Continuar con Google
+      </button>
+    </div>
+  </div>
+
+  <script type="module">
+    import { signInWithGoogle } from '../auth/auth.js';
+    document.getElementById('google-login').addEventListener('click', async () => { signInWithGoogle() });
+  </script>
+</body>
+</html>

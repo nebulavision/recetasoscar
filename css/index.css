@@ -1,0 +1,205 @@
+body {
+  font-family: "Segoe UI", sans-serif;
+  margin: 0;
+  background: #fdf6f6;
+  color: #333;
+}
+
+header {
+  text-align: center;
+  padding: 40px 20px 20px;
+  background: #c0392b;
+  color: white;
+  border-bottom-left-radius: 30px;
+  border-bottom-right-radius: 30px;
+}
+
+header h1 {
+  margin: 0;
+  font-size: 2rem;
+}
+
+header p {
+  margin: 10px 0 0;
+  font-size: 1rem;
+  opacity: 0.9;
+}
+
+header a {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+.logout-btn {
+  background-color: #ff4d4d;
+  color: white;
+  border: none;
+  padding: 0.6rem 1rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.logout-btn:hover {
+  background-color: #e63939;
+}
+
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+  padding: 30px;
+  max-width: 1200px;
+  margin: auto;
+}
+
+.card {
+  background: white;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.2s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+}
+
+.card img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+}
+
+.card-content {
+  padding: 15px 20px 20px;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.card h2 {
+  font-size: 1.2rem;
+  margin: 0 0 10px;
+  color: #c0392b;
+}
+
+.btn {
+  display: inline-block;
+  margin-top: auto;
+  background: #c0392b;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 10px;
+  text-decoration: none;
+  text-align: center;
+  transition: 0.3s;
+  cursor: pointer;
+  border: none;
+}
+
+.btn:hover {
+  background: #a93226;
+}
+
+.add-card {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px dashed #ccc;
+  background: #fafafa;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.add-card:hover {
+  background: #f0f0f0;
+  cursor: pointer;
+}
+
+.add-content {
+  text-align: center;
+}
+
+.breadcrumbs {
+  max-width: 1200px;
+  margin: 20px auto;
+  padding: 0 15px;
+  font-size: 0.95rem;
+  color: #555;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.breadcrumbs a {
+  color: #c0392b;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.breadcrumbs a:hover {
+  text-decoration: underline;
+}
+
+.breadcrumbs span {
+  color: #999;
+}
+
+.breadcrumbs .current {
+  font-weight: bold;
+  color: #333;
+}
+
+/* Modal */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal.hidden {
+  display: none;
+}
+
+.modal-content {
+  background: white;
+  padding: 2rem;
+  border-radius: 1rem;
+  width: 90%;
+  max-width: 400px;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+}
+
+.modal-content h2 {
+  margin-bottom: 1rem;
+}
+
+.modal-content label {
+  display: block;
+  margin-bottom: 1rem;
+}
+
+.modal-content input[type="text"],
+.modal-content input[type="file"] {
+  width: 100%;
+  margin-top: 0.5rem;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+}
