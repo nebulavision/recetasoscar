@@ -31,7 +31,8 @@ async function loadCategories() {
 
     grid.innerHTML = "";
 
-    createAddCard();
+    createAddCategoryCard();
+    createAddRecipeCard();
 
     if (categories.length) {
         categories.forEach(createCategoryCard);
@@ -40,7 +41,7 @@ async function loadCategories() {
     }
 }
 
-function createAddCard() {
+function createAddCategoryCard() {
     const addCard = document.createElement("div");
     addCard.className = "card add-card";
     addCard.innerHTML = `
@@ -50,6 +51,19 @@ function createAddCard() {
         </div>
     `;
     addCard.querySelector("a").addEventListener("click", mostrarModal);
+    grid.appendChild(addCard);
+}
+
+function createAddRecipeCard() {
+    const addCard = document.createElement("div");
+    addCard.className = "card add-card";
+    addCard.innerHTML = `
+        <div class="card-content add-content">
+            <h2>➕ Nueva receta</h2>
+            <a href="#" class="btn">Crear</a>
+        </div>
+    `;
+    addCard.querySelector("a").addEventListener("click", () => alert("TODO"));
     grid.appendChild(addCard);
 }
 
