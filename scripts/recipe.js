@@ -4,6 +4,8 @@ const recipeId = new URLSearchParams(window.location.search).get("id");
 const [recipe] = await getRecipe(recipeId);
 const recipeCard = document.getElementById("recipe");
 
+document.title = recipe.titulo;
+
 const createElement = (tag, { classList = [], text = "", attrs = {}, children = [] } = {}) => {
     const element = document.createElement(tag);
     if (classList.length) element.classList.add(...classList);
@@ -59,5 +61,3 @@ const recipeCardContent = createElement("div", {
 
 // Ensamblar tarjeta
 recipeCard.append(recipeImage, recipeCardContent);
-
-document.title = recipe.titulo;
