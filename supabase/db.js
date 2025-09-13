@@ -40,28 +40,43 @@ export async function getCurrentCategory(parentId) {
 }
 
 export async function insertCategory(nombre, image_url, parent_id) {
-    const { error } = await supabase.from("categorias").insert([{ nombre, image_url, parent_id}]);
-    
+    const { error } = await supabase.from("categorias").insert([{ nombre, image_url, parent_id }]);
+
     if (error) {
         console.error("Error creando categoría:", error);
         alert("❌ No se pudo crear la categoría");
         return false;
-    }else {
+    } else {
         return true;
     }
 }
 
-    export async function getRecipes(parentId) {
-        try {
-            const { data: recipes, error } = await supabase
-                .from("recetas")
-                .select("*")
-                .eq("categoria_id", parentId);
+export async function getRecipes(parentId) {
+    try {
+        const { data: recipes, error } = await supabase
+            .from("recetas")
+            .select("*")
+            .eq("categoria_id", parentId);
 
-            if (error) throw error;
+        if (error) throw error;
 
-            return recipes;
-        } catch (err) {
-            console.error("Error cargando categorías:", err);
-        }
+        return recipes;
+    } catch (err) {
+        console.error("Error cargando categorías:", err);
     }
+}
+
+export async function getRecipe(recipeId) {
+    try {
+        const { data: recipe, error } = await supabase
+            .from("recetas")
+            .select("*")
+            .eq("id", recipeId);
+
+        if (error) throw error;
+
+        return recipe;
+    } catch (err) {
+        console.error("Error cargando receta:", err);
+    }
+}
