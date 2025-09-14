@@ -1,8 +1,12 @@
 import { getRecipe } from "../supabase/db.js";
+import { getUserEmail, isAdmin} from '../auth/auth.js';
 
 const recipeId = new URLSearchParams(window.location.search).get("id");
 const [recipe] = await getRecipe(recipeId);
 const recipeCard = document.getElementById("recipe");
+const accessModal = document.getElementById("access-modal");
+
+const isAdminFlag = await isAdmin(await getUserEmail());
 
 document.title = recipe.titulo;
 
@@ -15,6 +19,17 @@ const createElement = (tag, { classList = [], text = "", attrs = {}, children = 
 
     return element;
 };
+
+async function showModal() {
+  if(isAdminFlag){
+    accessModal.classList.remove("hidden");
+  }  
+}
+
+function hideModal() {
+    accessModal.classList.add("hidden");
+    categoryForm.reset();
+}
 
 // Imágen
 const recipeImage = createElement("img", {
@@ -46,12 +61,28 @@ if (recipe.observaciones?.length > 0) {
   });
 }
 
+// Acciones recetas
+const recipeActions = createElement("div",{
+  attrs: { id: "recipe-actions" }
+});
+
+
 // Botón imprimir
 const printBtn = createElement("a", {
   classList: ["btn"],
   text: "💾 Guardar receta",
 });
 printBtn.addEventListener("click", () => window.print());
+recipeActions.appendChild(printBtn);
+
+// Botón compartir
+const shareBtn = createElement("a", {
+  classList: ["btn"],
+  text: "Accesos",
+  attrs: { id: "share-btn" }
+});
+shareBtn.addEventListener("click", showModal);
+if(isAdminFlag) recipeActions.appendChild(shareBtn);
 
 // Contenido principal
 const recipeCardContent = createElement("div", {
@@ -64,7 +95,7 @@ const recipeCardContent = createElement("div", {
     createElement("h2", { text: "Preparación" }),
     preparationList,
     observationList,
-    printBtn
+    recipeActions
   ].filter(Boolean)
 });
 

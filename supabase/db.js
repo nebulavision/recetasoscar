@@ -95,3 +95,18 @@ export async function queryRecipe(query) {
         console.error("Error cargando recetas:", err);
     }
 }
+
+export async function getAccessForRecipe(recipeId) {
+    try {
+        const { data: access, error } = await supabase
+            .from("receta_permisos")
+            .select("*")
+            .eq("receta_id", recipeId);
+
+        if (error) throw error;
+
+        return access;
+    } catch (err) {
+        console.error("Error cargando permisos:", err);
+    }
+}

@@ -1,12 +1,20 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Recetas Óscar y Bruno</title>
-  <link rel="stylesheet" href="css/index.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/header.css">
+  <link rel="stylesheet" href="css/grid.css">
+  <link rel="stylesheet" href="css/breadcrumbs.css">
+  <link rel="stylesheet" href="css/newCategoryModal.css">
+  <link rel="stylesheet" href="css/search.css">
+
   <script type="module" src="scripts/index.js"></script>
 </head>
+
 <body>
   <header>
     <div>
@@ -23,32 +31,36 @@
     </div>
   </header>
 
-  <!-- 🔹 Breadcrumbs -->
-  <nav class="breadcrumbs" id="breadcrumbs"></nav>
-
   <main>
-    <div class="grid" id="categorias-grid"></div>
+    <!-- 🔹 Breadcrumbs -->
+    <nav class="breadcrumbs" id="breadcrumbs"></nav>
+
+    <div class="grid" id="grid-category"></div>
 
     <!-- Modal Nueva Categoría -->
-    <div id="modal-categoria" class="modal hidden">
-      <div class="modal-content">
+    <div id="category-modal" class="hidden">
+      <div id="category-modal-content">
         <h2>Nueva Categoría</h2>
-        <form id="form-categoria">
+        <form id="category-form">
           <label>
             Nombre:
-            <input type="text" id="categoria-nombre" required>
+            <input type="text" id="category-name" required>
           </label>
           <label>
             Imagen:
-            <input type="file" id="categoria-imagen" accept="image/*" required>
+            <input type="file" id="category-image" accept="image/*" required>
           </label>
-          <div class="modal-actions">
-            <button type="button" id="cancelar-btn" class="btn secondary">Cancelar</button>
+          <div id="category-modal-actions">
+            <button type="button" id="category-cancel-btn" class="btn secondary">Cancelar</button>
             <button type="submit" class="btn">Guardar</button>
           </div>
         </form>
       </div>
     </div>
+
+    </div>
+
   </main>
 </body>
+
 </html>

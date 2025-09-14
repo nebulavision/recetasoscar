@@ -1,0 +1,41 @@
+header {
+  text-align: center;
+  padding: 40px 20px 20px;
+  background: #c0392b;
+  color: white;
+  border-bottom-left-radius: 30px;
+  border-bottom-right-radius: 30px;
+  position: relative;
+}
+
+header h1 {
+  margin: 0;
+  font-size: 2rem;
+}
+
+header p {
+  margin: 10px 0 0;
+  font-size: 1rem;
+  opacity: 0.9;
+}
+
+header a {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+
+#logout-btn {
+  padding: 12px 25px;
+  border-radius: 15px;
+  border: none;
+  background: #c0392b;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+#logout-btn:hover {
+  background-color: #a83326;
+}

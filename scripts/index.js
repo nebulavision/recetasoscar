@@ -2,20 +2,20 @@ import { checkSession, signOut } from '../auth/auth.js';
 import { getCurrentCategoriesFor, getCurrentCategory, getRecipes, insertCategory, queryRecipe } from '../supabase/db.js';
 import { getPublicUrl, uploadToStorage } from '../supabase/storage.js';
 
-const grid = document.getElementById("categorias-grid");
+const grid = document.getElementById("grid-category");
 const breadcrumbs = document.getElementById("breadcrumbs");
-const modal = document.getElementById("modal-categoria");
-const categoryForm = document.getElementById("form-categoria");
+const modal = document.getElementById("category-modal");
+const categoryForm = document.getElementById("category-form");
 const searchInput = document.getElementById("search-input");
 const searchBtn = document.getElementById("search-btn");
-const cancelBtn = document.getElementById("cancelar-btn");
+const cancelBtn = document.getElementById("category-cancel-btn");
 const logoutBtn = document.getElementById("logout-btn");
 
 const urlParams = new URLSearchParams(window.location.search);
 const parentId = urlParams.get("parent") || null;
 
 // ------------------- MODAL -------------------
-function mostrarModal() {
+function showModal() {
     modal.classList.remove("hidden");
 }
 
@@ -53,6 +53,7 @@ async function loadCategories() {
         categories.forEach(createCategoryCard);
     } else if (parentId) {
         grid.innerHTML = "";
+        createAddCategoryCard();
         createAddRecipeCard();
         loadRecipes();
     }
@@ -67,7 +68,7 @@ function createAddCategoryCard() {
             <a href="#" class="btn">Crear</a>
         </div>
     `;
-    addCard.querySelector("a").addEventListener("click", mostrarModal);
+    addCard.querySelector("a").addEventListener("click", showModal);
     grid.appendChild(addCard);
 }
 
@@ -144,8 +145,8 @@ async function loadBreadcrumbs(flag) {
 categoryForm.addEventListener("submit", async (e) => {
     e.preventDefault();
 
-    const nombre = document.getElementById("categoria-nombre").value;
-    const file = document.getElementById("categoria-imagen").files[0];
+    const nombre = document.getElementById("category-name").value;
+    const file = document.getElementById("category-image").files[0];
 
     if (!file) return alert("Debes seleccionar una imagen");
 

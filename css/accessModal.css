@@ -1,0 +1,158 @@
+#access-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+#access-modal.hidden {
+  display: none;
+}
+
+#access-modal-content{
+  background: #fff;
+  padding: 2rem;
+  border-radius: 1.2rem;
+  width: 90%;
+  max-width: 750px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+}
+
+/* Animación suave al abrir */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.access-modal-content h2 {
+  margin: 0;
+  font-size: 1.5rem;
+  color: #c0392b;
+  text-align: center;
+  border-bottom: 2px solid #f2f2f2;
+  padding-bottom: 0.5rem;
+}
+
+/* Tabla de accesos */
+#access-modal-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+  font-size: 0.95rem;
+}
+
+#access-modal-table th, 
+#access-modal-table td {
+  padding: 12px 10px;
+  border-bottom: 1px solid #eee;
+}
+
+#access-modal-table th {
+  background: #f9f9f9;
+  text-align: left;
+  color: #666;
+  font-weight: 600;
+}
+
+#access-modal-tabletd:last-child {
+  text-align: center;
+}
+
+/* Botón de eliminar (papelera) */
+.delete-access-btn {
+  background: #ff4d4d;
+  border: none;
+  padding: 6px 10px;
+  border-radius: 8%;
+  cursor: pointer;
+  color: white;
+  font-size: 0.9rem;
+  transition: background 0.2s ease, transform 0.1s ease;
+}
+
+.delete-access-btn:hover {
+  background: #e63939;
+  transform: scale(1.05);
+}
+
+.delete-access-btn:active {
+  transform: scale(0.95);
+}
+
+/* Formulario */
+#access-modal-form {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 1rem;
+}
+
+#access-modal-form label {
+  font-weight: 500;
+  color: #444;
+  text-align: left;
+}
+
+#access-modal-form input[type="email"] {
+  padding: 0.7rem 1rem;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+  transition: border 0.2s ease;
+  margin-top: 10px;
+  align-self: flex-end;
+  width: calc(100% - 2rem);
+}
+
+#access-modal-form input[type="email"]:focus {
+  outline: none;
+}
+
+#access-modal-allow-btn {
+  margin-top: auto;
+  background: #c0392b;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 10px;
+  text-decoration: none;
+  text-align: center;
+  transition: 0.3s;
+  cursor: pointer;
+  border: none;
+  width: 140px;
+  align-self: flex-end;
+}
+
+#access-modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+}
+
+#access-modal-actions .btn {
+  padding: 0.7rem 1.2rem;
+  border-radius: 10px;
+}
+
+#access-modal-close-btn {
+    margin-top: 10px;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .modal-content {
+    max-width: 95%;
+    padding: 1.2rem;
+  }
+  .tabla-accesos th,
+  .tabla-accesos td {
+    font-size: 0.9rem;
+    padding: 8px;
+  }
+}

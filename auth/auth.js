@@ -16,7 +16,7 @@ function getCallbackBaseUrl() {
 
 export async function signInWithGoogle() {
     console.log(getCallbackBaseUrl);
-    
+
     const { data, error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
         options: {
@@ -32,7 +32,22 @@ export async function signInWithGoogle() {
     }
 }
 
-export async function signOut(){
+export async function getUserEmail() {
+    const { data: { user }, error } = await supabase.auth.getUser()
+
+    if (error) {
+        console.error('Error al obtener usuario:', error)
+        return
+    }
+
+    if (user) {
+        return user.email
+    } else {
+        console.log('No hay usuario logueado')
+    }
+}
+
+export async function signOut() {
     const { error } = await supabase.auth.signOut();
 
     if (error) {
@@ -51,9 +66,20 @@ export async function handleOAuthCallback() {
         return false;
     }
     if (session) {
-       return true;
+        return true;
     } else {
         return false;
+    }
+}
+
+export async function isAdmin(email) {
+    const { data, error } = await supabase
+        .rpc('isAdmin', { p_email: email });
+
+    if (error) {
+        console.error('Error:', error);
+    } else {
+        return data;
     }
 }
 

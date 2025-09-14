@@ -248,13 +248,13 @@ header a {
 }
 
 /* Responsivo para móvil */
-@media (max-width: 500px) {
+@media (max-width: 800px) {
   .search-container {
     flex-direction: column;
     gap: 10px;
   }
 
   #search-input, #search-btn {
-    width: 100%;
+    width: 90%;
   }
 }

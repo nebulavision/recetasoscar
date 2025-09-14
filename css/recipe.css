@@ -66,10 +66,22 @@ li {
 .btn-back {
   background: #7f8c8d;
   margin-bottom: 15px;
+  outline: none;
 }
 
 .btn-back:hover {
   background: #636e72;
+}
+
+#recipe-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 10px;
+}
+
+#share-btn {
+  background-color: #383e40 ;
 }
 
 @keyframes fadeIn {
