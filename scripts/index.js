@@ -114,7 +114,7 @@ async function loadRecipes(recipesList) {
                 <img src="${rec.imagen_url || "https://source.unsplash.com/400x300/?food"}" alt="${rec.titulo}">
                 <div class="card-content">
                     <h2>${rec.titulo}</h2>
-                    <a href="../recipe.html?id=${rec.id}" class="btn">Ver receta</a>
+                    <a href="recipe.html?id=${rec.id}" class="btn">Ver receta</a>
                 </div>
             `;
         grid.appendChild(card);

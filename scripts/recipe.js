@@ -38,6 +38,14 @@ const preparationList = createElement("ol", {
   children: recipe.pasos.map(i => createElement("li", { text: i }))
 });
 
+// Observaciones
+let observationList = null;
+if (recipe.observaciones?.length > 0) {
+  observationList = createElement("ul", {
+    children: recipe.observaciones.map(o => createElement("li", { text: o }))
+  });
+}
+
 // Botón imprimir
 const printBtn = createElement("a", {
   classList: ["btn"],
@@ -55,8 +63,9 @@ const recipeCardContent = createElement("div", {
     ingredientsList,
     createElement("h2", { text: "Preparación" }),
     preparationList,
+    observationList,
     printBtn
-  ]
+  ].filter(Boolean)
 });
 
 // Ensamblar tarjeta
