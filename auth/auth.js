@@ -1,10 +1,18 @@
 import { supabase } from '../config/supabase.js';
 
-function getCallbackBaseUrl(){
-    const { origin, pathname } = window.location;
+function getCallbackBaseUrl() {
+    const { origin, pathname, hostname } = window.location;
+    const isGitHubPages = hostname.includes("github.io"); // detecta si estás en GitHub Pages
 
-    return origin + "/auth/callback.html";
+    if (isGitHubPages) {
+        // Añade el nombre del repositorio antes del callback
+        return origin + "/recetasoscar/auth/callback.html";
+    } else {
+        // Localhost o cualquier otro entorno
+        return origin + "/auth/callback.html";
+    }
 }
+
 
 export async function signInWithGoogle() {
     console.log(getCallbackBaseUrl);
