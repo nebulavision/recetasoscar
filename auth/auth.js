@@ -3,18 +3,7 @@ import { supabase } from '../config/supabase.js';
 function getCallbackBaseUrl(){
     const { origin, pathname } = window.location;
 
-    // En localhost o 127.0.0.1
-    if(origin.includes("localhost") || origin.includes("127.0.0.1")) {
-        return origin;
-    }
-
-    // En GitHub Pages
-    const parts = pathname.split("/").filter(Boolean);
-    if(parts.length > 0) {
-        return origin + "/" + parts[0];
-    } else {
-        return origin
-    }
+    return origin + "/auth/callback.html"; return origin
 }
 
 export async function signInWithGoogle() {
@@ -46,7 +35,7 @@ export async function signOut(){
 
 export async function handleOAuthCallback() {
     const { data: { session }, error } = await supabase.auth.getSession();
-    
+
     if (error) {
         console.error('Error callback:', error.message);
         return false;

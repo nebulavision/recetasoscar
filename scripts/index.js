@@ -1,11 +1,13 @@
 import { checkSession, signOut } from '../auth/auth.js';
-import { getCurrentCategoriesFor, getCurrentCategory, getRecipes, insertCategory } from '../supabase/db.js';
+import { getCurrentCategoriesFor, getCurrentCategory, getRecipes, insertCategory, queryRecipe } from '../supabase/db.js';
 import { getPublicUrl, uploadToStorage } from '../supabase/storage.js';
 
 const grid = document.getElementById("categorias-grid");
 const breadcrumbs = document.getElementById("breadcrumbs");
 const modal = document.getElementById("modal-categoria");
 const categoryForm = document.getElementById("form-categoria");
+const searchInput = document.getElementById("search-input");
+const searchBtn = document.getElementById("search-btn");
 const cancelBtn = document.getElementById("cancelar-btn");
 const logoutBtn = document.getElementById("logout-btn");
 
@@ -22,21 +24,36 @@ function hideModal() {
     categoryForm.reset();
 }
 
+searchBtn.addEventListener("click", search);
 cancelBtn.addEventListener("click", hideModal);
 logoutBtn.addEventListener("click", signOut);
+
+// ------------------- BUSQUEDA ---------------------
+async function search() {
+    const searchInputValue = searchInput.value;
+
+    if (!searchInputValue) window.location = "index.html"; 
+
+    const recipes = await queryRecipe(searchInputValue);
+
+    console.log(recipes);
+    grid.innerHTML = "";
+    loadRecipes(recipes);
+    searchInput.value = "";
+}
 
 // ------------------- CATEGORÍAS -------------------
 async function loadCategories() {
     const categories = await getCurrentCategoriesFor(parentId);
 
-    grid.innerHTML = "";
-
     createAddCategoryCard();
-    createAddRecipeCard();
 
     if (categories.length) {
+        grid.innerHTML = "";
         categories.forEach(createCategoryCard);
     } else if (parentId) {
+        grid.innerHTML = "";
+        createAddRecipeCard();
         loadRecipes();
     }
 }
@@ -81,8 +98,14 @@ function createCategoryCard(cat) {
 }
 
 // ------------------- RECETAS -------------------
-async function loadRecipes() {
-    const recipes = await getRecipes(parentId);
+async function loadRecipes(recipesList) {
+    let recipes;
+
+    if (recipesList && recipesList.length > 0) {
+        recipes = recipesList;
+    } else {
+        recipes = await getRecipes(parentId);
+    }
 
     recipes.forEach(rec => {
         const card = document.createElement("div");
@@ -96,18 +119,24 @@ async function loadRecipes() {
             `;
         grid.appendChild(card);
     });
+
+    //loadBreadcrumbs(true);
 }
 
 
 // ------------------- BREADCRUMBS -------------------
-async function loadBreadcrumbs() {
+async function loadBreadcrumbs(flag) {
     let trail = await getCurrentCategory(parentId);
 
-    breadcrumbs.innerHTML = trail.reduce((html, cat, i) => {
-        if (i === 0) html = `<a href="index.html">Recetas</a>`;
-        html += `<span>/</span>${i === trail.length - 1 ? `<span class="current">${cat.nombre}</span>` : `<a href="index.html?parent=${cat.id}">${cat.nombre}</a>`}`;
-        return html;
-    }, '');
+    if (flag) {
+        breadcrumbs.innerHTML = `<a href="index.html">Recetas</a>`;
+    } else {
+        breadcrumbs.innerHTML = trail.reduce((html, cat, i) => {
+            if (i === 0) html = `<a href="index.html">Recetas</a>`;
+            html += `<span>/</span>${i === trail.length - 1 ? `<span class="current">${cat.nombre}</span>` : `<a href="index.html?parent=${cat.id}">${cat.nombre}</a>`}`;
+            return html;
+        }, '');
+    }
 }
 
 
@@ -127,8 +156,8 @@ categoryForm.addEventListener("submit", async (e) => {
     const image_url = await getPublicUrl("imagenes", filePath);
 
     const insertResult = await insertCategory(nombre, image_url, parentId || null);
-    
-    if(insertResult){
+
+    if (insertResult) {
         hideModal();
         loadCategories();
     }

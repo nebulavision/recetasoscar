@@ -62,7 +62,7 @@ export async function getRecipes(parentId) {
 
         return recipes;
     } catch (err) {
-        console.error("Error cargando categorías:", err);
+        console.error("Error cargando recetas:", err);
     }
 }
 
@@ -78,5 +78,20 @@ export async function getRecipe(recipeId) {
         return recipe;
     } catch (err) {
         console.error("Error cargando receta:", err);
+    }
+}
+
+export async function queryRecipe(query) {
+    try {
+        const { data: recipes, error } = await supabase
+            .from("recetas")
+            .select("*")
+            .ilike("titulo", `%${query}%`);
+
+        if (error) throw error;
+
+        return recipes;
+    } catch (err) {
+        console.error("Error cargando recetas:", err);
     }
 }
