@@ -54,8 +54,10 @@ const preparationList = createElement("ol", {
 });
 
 // Observaciones
+let observationsTitle = null;
 let observationList = null;
 if (recipe.observaciones?.length > 0) {
+  observationsTitle = createElement("h2", { text: "Observaciones" });
   observationList = createElement("ul", {
     children: recipe.observaciones.map(o => createElement("li", { text: o }))
   });
@@ -65,7 +67,6 @@ if (recipe.observaciones?.length > 0) {
 const recipeActions = createElement("div",{
   attrs: { id: "recipe-actions" }
 });
-
 
 // Botón imprimir
 const printBtn = createElement("a", {
@@ -94,6 +95,7 @@ const recipeCardContent = createElement("div", {
     ingredientsList,
     createElement("h2", { text: "Preparación" }),
     preparationList,
+    observationsTitle,
     observationList,
     recipeActions
   ].filter(Boolean)
