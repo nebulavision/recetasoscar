@@ -3,10 +3,12 @@ import { supabase } from '../config/supabase.js';
 function getCallbackBaseUrl(){
     const { origin, pathname } = window.location;
 
-    return origin + "/auth/callback.html"; return origin
+    return origin + "/auth/callback.html";
 }
 
 export async function signInWithGoogle() {
+    console.log(getCallbackBaseUrl);
+    
     const { data, error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
         options: {
