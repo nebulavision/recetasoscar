@@ -72,12 +72,13 @@ export async function handleOAuthCallback() {
     }
 }
 
-export async function isAdmin(email) {
+export async function isAdmin() {
     const { data, error } = await supabase
-        .rpc('isAdmin', { p_email: email });
+        .rpc('isAdmin', { p_email: await getUserEmail() });
 
     if (error) {
         console.error('Error:', error);
+        return false;
     } else {
         return data;
     }

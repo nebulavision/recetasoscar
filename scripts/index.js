@@ -1,20 +1,22 @@
-import { checkSession, signOut } from '../auth/auth.js';
-import { getCurrentCategoriesFor, getCurrentCategory, getRecipes, insertCategory, queryRecipe } from '../supabase/db.js';
-import { getPublicUrl, uploadToStorage } from '../supabase/storage.js';
+import { checkSession, isAdmin, signOut } from '../auth/auth.js';
+import { getCurrentCategoriesFor, getCurrentCategory, getRecipes, queryRecipe } from '../supabase/db.js';
+import { saveCategory } from './newCategoryModal.js';
 
 const grid = document.getElementById("grid-category");
 const breadcrumbs = document.getElementById("breadcrumbs");
-const modal = document.getElementById("category-modal");
+
 const categoryForm = document.getElementById("category-form");
 const searchInput = document.getElementById("search-input");
 const searchBtn = document.getElementById("search-btn");
+const modal = document.getElementById("category-modal");
 const cancelBtn = document.getElementById("category-cancel-btn");
 const logoutBtn = document.getElementById("logout-btn");
 
 const urlParams = new URLSearchParams(window.location.search);
 const parentId = urlParams.get("parent") || null;
 
-// ------------------- MODAL -------------------
+
+// ------------ NEW CATEGORY MODAL ------------------
 function showModal() {
     modal.classList.remove("hidden");
 }
@@ -24,41 +26,33 @@ function hideModal() {
     categoryForm.reset();
 }
 
-searchBtn.addEventListener("click", search);
+categoryForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const categoryName = document.getElementById("category-name").value;
+    const imageFile = document.getElementById("category-image").files[0];
+
+    saveCategory(categoryName, imageFile)
+});
+
 cancelBtn.addEventListener("click", hideModal);
-logoutBtn.addEventListener("click", signOut);
 
 // ------------------- BUSQUEDA ---------------------
 async function search() {
     const searchInputValue = searchInput.value;
 
-    if (!searchInputValue) window.location = "index.html"; 
+    if (!searchInputValue) window.location = "index.html";
 
     const recipes = await queryRecipe(searchInputValue);
 
-    console.log(recipes);
     grid.innerHTML = "";
     loadRecipes(recipes);
     searchInput.value = "";
 }
 
+searchBtn.addEventListener("click", search);
+
 // ------------------- CATEGORÍAS -------------------
-async function loadCategories() {
-    const categories = await getCurrentCategoriesFor(parentId);
-
-    createAddCategoryCard();
-
-    if (categories.length) {
-        grid.innerHTML = "";
-        categories.forEach(createCategoryCard);
-    } else if (parentId) {
-        grid.innerHTML = "";
-        createAddCategoryCard();
-        createAddRecipeCard();
-        loadRecipes();
-    }
-}
-
 function createAddCategoryCard() {
     const addCard = document.createElement("div");
     addCard.className = "card add-card";
@@ -72,6 +66,37 @@ function createAddCategoryCard() {
     grid.appendChild(addCard);
 }
 
+function createCategoryCard(category) {
+    const card = document.createElement("div");
+    card.className = "card";
+    card.innerHTML = `
+        <img src="${category.image_url || "https://antojoentucocina.com/wp-content/uploads/2025/04/masitas-de-maicena-400x300.jpg"}" alt="${category.nombre}">
+        <div class="card-content">
+            <h2>${category.nombre}</h2>
+            <a href="index.html?parent=${category.id}" class="btn">Explorar</a>
+        </div>
+    `;
+    grid.appendChild(card);
+}
+
+async function loadCategories() {
+    const categories = await getCurrentCategoriesFor(parentId);
+
+    grid.innerHTML = "";
+
+    if(await isAdmin()){
+        createAddCategoryCard();
+        createAddRecipeCard();
+    }
+
+    if (categories.length) {
+        categories.forEach(createCategoryCard);
+    } else if (parentId) {
+        loadRecipes();
+    }
+}
+
+// ------------------- RECETAS -------------------
 function createAddRecipeCard() {
     const addCard = document.createElement("div");
     addCard.className = "card add-card";
@@ -85,20 +110,20 @@ function createAddRecipeCard() {
     grid.appendChild(addCard);
 }
 
-function createCategoryCard(cat) {
+function createRecipeCard(recipe) {
     const card = document.createElement("div");
     card.className = "card";
     card.innerHTML = `
-        <img src="${cat.image_url || "https://antojoentucocina.com/wp-content/uploads/2025/04/masitas-de-maicena-400x300.jpg"}" alt="${cat.nombre}">
+        <img src="${recipe.imagen_url || "https://source.unsplash.com/400x300/?food"}" alt="${recipe.titulo}">
         <div class="card-content">
-            <h2>${cat.nombre}</h2>
-            <a href="index.html?parent=${cat.id}" class="btn">Explorar</a>
+            <h2>${recipe.titulo}</h2>
+            <a href="recipe.html?id=${recipe.id}" class="btn">Ver receta</a>
         </div>
     `;
+
     grid.appendChild(card);
 }
 
-// ------------------- RECETAS -------------------
 async function loadRecipes(recipesList) {
     let recipes;
 
@@ -108,22 +133,8 @@ async function loadRecipes(recipesList) {
         recipes = await getRecipes(parentId);
     }
 
-    recipes.forEach(rec => {
-        const card = document.createElement("div");
-        card.className = "card";
-        card.innerHTML = `
-                <img src="${rec.imagen_url || "https://source.unsplash.com/400x300/?food"}" alt="${rec.titulo}">
-                <div class="card-content">
-                    <h2>${rec.titulo}</h2>
-                    <a href="recipe.html?id=${rec.id}" class="btn">Ver receta</a>
-                </div>
-            `;
-        grid.appendChild(card);
-    });
-
-    //loadBreadcrumbs(true);
+    recipes.forEach(createRecipeCard);
 }
-
 
 // ------------------- BREADCRUMBS -------------------
 async function loadBreadcrumbs(flag) {
@@ -140,29 +151,7 @@ async function loadBreadcrumbs(flag) {
     }
 }
 
-
-// ------------------- FORMULARIO -------------------
-categoryForm.addEventListener("submit", async (e) => {
-    e.preventDefault();
-
-    const nombre = document.getElementById("category-name").value;
-    const file = document.getElementById("category-image").files[0];
-
-    if (!file) return alert("Debes seleccionar una imagen");
-
-    const filePath = `categorias/${crypto.randomUUID()}-${file.name}`;
-    const uploaded = await uploadToStorage(filePath, file);
-    if (!uploaded) return;
-
-    const image_url = await getPublicUrl("imagenes", filePath);
-
-    const insertResult = await insertCategory(nombre, image_url, parentId || null);
-
-    if (insertResult) {
-        hideModal();
-        loadCategories();
-    }
-});
+logoutBtn.addEventListener("click", signOut);
 
 // ------------------- INICIALIZACIÓN -------------------
 checkSession();

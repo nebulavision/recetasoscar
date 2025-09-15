@@ -1,5 +1,5 @@
 import { getUserEmail } from "../auth/auth.js";
-import { getAccessForRecipe } from "../supabase/db.js";
+import { deletePermission, getAccessForRecipe, insertRecipePermission } from "../supabase/db.js";
 
 const accessList = document.getElementById("access-modal-list");
 const accessForm = document.getElementById("access-modal-form");
@@ -9,12 +9,12 @@ const accessModal = document.getElementById("access-modal");
 const urlParams = new URLSearchParams(window.location.search);
 const recipeId = urlParams.get("id") || null;
 
-let accesos = await getAccessForRecipe(recipeId);
-
 // Renderizar accesos
-function renderAccess() {
+async function renderAccess() {
+  let access = await getAccessForRecipe(recipeId);
+
   accessList.innerHTML = "";
-  accesos.forEach((a, index) => {
+  access.forEach((a, index) => {
     const row = document.createElement("tr");
     row.innerHTML = `
       <td>${a.email}</td>
@@ -29,7 +29,7 @@ function renderAccess() {
   document.querySelectorAll(".delete-access-btn").forEach(btn => {
     btn.addEventListener("click", (e) => {
       const idx = e.target.dataset.index;
-      accesos.splice(idx, 1);
+      deletePermission(access[idx].id)
       renderAccess();
     });
   });
@@ -41,11 +41,7 @@ accessForm.addEventListener("submit", async (e) => {
   const email = document.getElementById("access-email").value;
   if (!email) return;
 
-  accesos.push({
-    email,
-    fecha: new Date().toISOString().split("T")[0],
-    granted_by: await getUserEmail()
-  });
+  await insertRecipePermission(recipeId, email, await getUserEmail());
 
   document.getElementById("access-email").value = "";
   renderAccess();

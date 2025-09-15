@@ -1,5 +1,6 @@
 import { supabase } from '../config/supabase.js';
 
+// -------------------- CATEGORIES -------------------------
 export async function getCurrentCategoriesFor(parentId) {
     try {
         const query = supabase.from("categorias").select("id, nombre, parent_id, image_url");
@@ -51,6 +52,7 @@ export async function insertCategory(nombre, image_url, parent_id) {
     }
 }
 
+// ------------------ RECIPES ----------------------------
 export async function getRecipes(parentId) {
     try {
         const { data: recipes, error } = await supabase
@@ -96,6 +98,7 @@ export async function queryRecipe(query) {
     }
 }
 
+// ------------------ PERMISOS RECETAS ----------------------------
 export async function getAccessForRecipe(recipeId) {
     try {
         const { data: access, error } = await supabase
@@ -108,5 +111,37 @@ export async function getAccessForRecipe(recipeId) {
         return access;
     } catch (err) {
         console.error("Error cargando permisos:", err);
+    }
+}
+
+export async function insertRecipePermission(recipeId, email, grantedBy){
+    const { error } = await supabase.from("receta_permisos").insert([
+        { 
+            receta_id: recipeId,
+            email: email,
+            granted_by: grantedBy 
+        }
+    ]);
+
+    if (error) {
+        console.error("Error dando acceso:", error);
+        alert("❌ No se pudo permitir el acceso");
+        return false;
+    } else {
+        return true;
+    }
+}
+
+export async function deletePermission(permissionId){
+    const { error } = await supabase.from("receta_permisos")
+        .delete()
+        .eq('id', permissionId);
+
+    if (error) {
+        console.error("Error eliminando acceso:", error);
+        alert("❌ No se pudo eliminar el acceso");
+        return false;
+    } else {
+        return true;
     }
 }
