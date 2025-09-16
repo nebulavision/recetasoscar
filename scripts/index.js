@@ -54,6 +54,7 @@ categoryForm.addEventListener("submit", async (e) => {
 
   if (insertResult) {
         hideCategoryModal();
+        grid.innerHTML = "";
         loadCategories();
     }
 });
