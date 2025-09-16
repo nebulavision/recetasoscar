@@ -53,7 +53,7 @@ categoryForm.addEventListener("submit", async (e) => {
   let insertResult = saveCategory(categoryName, imageFile, parentId);
 
   if (insertResult) {
-        hideModal();
+        hideCategoryModal();
         loadCategories();
     }
 });
