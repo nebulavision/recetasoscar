@@ -1,7 +1,7 @@
 import { getPublicUrl, uploadToStorage } from '../supabase/storage.js';
 import { insertCategory } from '../supabase/db.js';
 
-export async function saveCategory(categoryName, categoryImage) {
+export async function saveCategory(categoryName, categoryImage, parentId) {
     if (!categoryImage) return alert("Debes seleccionar una imagen");
 
     const filePath = `categorias/${crypto.randomUUID()}-${categoryImage.name}`;

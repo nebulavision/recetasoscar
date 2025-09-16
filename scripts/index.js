@@ -50,7 +50,7 @@ categoryForm.addEventListener("submit", async (e) => {
   const categoryName = document.getElementById("category-name").value;
   const imageFile = document.getElementById("category-image").files[0];
 
-  saveCategory(categoryName, imageFile)
+  saveCategory(categoryName, imageFile, parentId);
 });
 
 categoryCancelBtn.addEventListener("click", hideCategoryModal);
