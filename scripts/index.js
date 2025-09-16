@@ -71,12 +71,14 @@ async function search() {
   const recipes = await queryRecipe(searchInputValue);
 
   grid.innerHTML = "";
-  noRecipesContainer.classList.remove("hidden");
+  
   if (recipes.length == 0) {
+    noRecipesContainer.classList.remove("hidden");
     noRecipesBackBtn.addEventListener("click", () => {
       location.reload();
     });
   } else {
+    noRecipesContainer.classList.add("hidden");
     loadRecipes(recipes);
   }
 
