@@ -57,7 +57,7 @@ recipeForm.addEventListener("submit", async (e) => {
         titulo: recipeTitle,
         ingredientes: recipeIngredients.length === 0 ? null : recipeIngredients,
         pasos: recipePreparation,
-        imagen_url: imageFile === undefined ? null : getPublicUrl("imagenes", imagePath),
+        imagen_url: imageFile === undefined ? null : await getPublicUrl("imagenes", imagePath),
         categoria_id: parentId,
         observaciones: recipeObservations.length === 0 ? null : recipeObservations,
         is_complex: isComplexRecipe,
