@@ -87,9 +87,20 @@ isComplexRecipeChb.addEventListener("change", (e) => {
 });
 
 function onSearchResultClick(recipe) {
+    let deleteButton = createElement("button", {
+        attrs: { type: "button" },
+        classList: ["delete-subrecipe-btn"],
+        text: "🗑️"
+    })
+    deleteButton.addEventListener("click", (e) => {
+        const li = e.target.closest('li');
+        subrecipeListSection.remove(li);
+    });
+
     let subrecipe = createElement("li", {
         attrs: { id: recipe.id },
-        text: recipe.titulo
+        text: recipe.titulo,
+        children: [ deleteButton ]
     });
 
     subrecipeListSection.appendChild(subrecipe);

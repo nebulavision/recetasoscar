@@ -36,6 +36,19 @@
   resize: vertical;
 }
 
+
+/* Botón de eliminar (papelera) */
+.delete-subrecipe-btn {
+  background: #ff4d4d;
+  border: none;
+  padding: 6px 10px;
+  border-radius: 8%;
+  cursor: pointer;
+  color: white;
+  font-size: 0.9rem;
+  transition: background 0.2s ease, transform 0.1s ease;
+}
+
 #new-recipe-form .checkbox-group {
   margin: 1rem 0;
   display: flex;
