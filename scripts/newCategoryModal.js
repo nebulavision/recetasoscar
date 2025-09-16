@@ -10,12 +10,7 @@ export async function saveCategory(categoryName, categoryImage, parentId) {
 
     const image_url = await getPublicUrl("imagenes", filePath);
 
-    const insertResult = await insertCategory(categoryName, image_url, parentId || null);
-
-    if (insertResult) {
-        hideModal();
-        loadCategories();
-    }
+    return await insertCategory(categoryName, image_url, parentId || null);
 }
 
 
