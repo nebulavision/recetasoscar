@@ -4,3 +4,9 @@ body {
   background: #fdf6f6;
   color: #333;
 }
+
+dialog.modal{
+  border: none;          /* quita el borde gris */
+  padding: 0;            /* elimina el padding interno */
+  background: transparent; /* si quieres usar tu propio fondo */
+}

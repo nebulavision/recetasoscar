@@ -1,3 +1,7 @@
+body{
+  padding: 20px;
+}
+
 #sub-recipes details {
   background: #fafafa;
   border: 1px solid #ddd;
@@ -18,14 +22,6 @@
   box-shadow: 0 3px 8px rgba(0,0,0,0.05);
 }
 
-body {
-  font-family: "Segoe UI", sans-serif;
-  background: #fdf6f6;
-  margin: 0;
-  padding: 20px;
-  color: #333;
-}
-
 #recipe-card {
   max-width: 600px;
   margin: auto;
@@ -34,10 +30,6 @@ body {
   box-shadow: 0 5px 20px rgba(0,0,0,0.1);
   overflow: hidden;
   animation: fadeIn 1s ease;
-}
-
-.hidden {
-  display: none;
 }
 
 #recipe-card img {

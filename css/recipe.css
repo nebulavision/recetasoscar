@@ -1,9 +1,5 @@
-body {
-  font-family: "Segoe UI", sans-serif;
-  background: #fdf6f6;
-  margin: 0;
+body{
   padding: 20px;
-  color: #333;
 }
 
 .card {

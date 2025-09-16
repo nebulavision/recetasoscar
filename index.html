@@ -23,7 +23,7 @@
       <p>Explora nuestras deliciosas categorías</p>
     </div>
     <div>
-      <a id="logout-btn">Cerrar sesión</a>
+      <button id="logout-btn">Cerrar sesión</button>
     </div>
     <!-- Cuadro de búsqueda -->
     <div class="search-container">
@@ -43,11 +43,12 @@
       <p>No se han encontrado recetas</p>
       <button id="btn-back" class="btn secondary">⬅ Volver atrás</button>
     </div>
+  </main>
 
-    <!-- Modal Nueva Categoría -->
-    <div id="category-modal" class="modal hidden">
+  <!-- Modal Nueva Categoría -->
+    <dialog id="category-modal" class="modal hidden" aria-modal="true" aria-labelledby="category-modal-title">
       <div id="category-modal-content" class="modal-content">
-        <h2>Nueva Categoría</h2>
+        <h2 id="category-modal-title">Nueva Categoría</h2>
         <form id="category-form">
           <label>
             Nombre:
@@ -63,12 +64,12 @@
           </div>
         </form>
       </div>
-    </div>
+    </dialog>
 
     <!-- Modal Nueva Receta -->
-    <div id="recipe-modal" class="modal hidden">
+    <dialog id="recipe-modal" class="modal hidden" aria-modal="true" aria-labelledby="recipe-modal-title">
       <div id="recipe-modal-content" class="modal-content wide">
-        <h2>Nueva Receta</h2>
+        <h2 id="recipe-modal-title">Nueva Receta</h2>
         <form id="new-recipe-form">
           <label>
             Título:
@@ -118,12 +119,12 @@
           </div>
         </form>
       </div>
-    </div>
+    </dialog>
 
     <!-- 🔹 Submodal para añadir subrecetas -->
-    <div id="subrecipe-modal" class="modal hidden">
+    <dialog id="subrecipe-modal" class="modal hidden" aria-modal="true" aria-labelledby="subrecipe-modal-title">
       <div id="subrecipe-modal-content" class="modal-content">
-        <h2>Añadir Subreceta</h2>
+        <h2 id="subrecipe-modal-title">Añadir Subreceta</h2>
         <label>
           Buscar receta:
           <input type="text" id="subrecipe-search" placeholder="Escribe un título...">
@@ -134,10 +135,7 @@
           <button type="button" id="subrecipe-modal-cancel-btn" class="btn secondary">Cerrar</button>
         </div>
       </div>
-    </div>
-
-
-  </main>
+    </dialog>
 </body>
 
 </html>

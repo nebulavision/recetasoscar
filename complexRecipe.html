@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/base.css">
     <link rel="stylesheet" href="css/complexRecipe.css">
     <link rel="stylesheet" href="css/accessModal.css">
     <script type="module" src="scripts/complexRecipe.js"></script>
@@ -12,47 +13,43 @@
 
 <body>
     <main>
-        <section id="recipe-card">
-            
-        </section>
-
-        <!-- MODAL DE ACCESOS -->
-        <section id="access-modal" class="modal hidden">
-            <div id="access-modal-content" class="modal-content">
-                <h2>Accesos</h2>
-
-                <!-- Formulario para dar acceso -->
-                <form id="access-modal-form">
-                    <label>
-                        Email:
-                        <input type="email" id="access-email" required />
-                    </label>
-                    <button type="submit" id="access-modal-allow-btn">Dar acceso</button>
-                </form>
-
-                <!-- Lista de accesos permitidos -->
-                <h3>Accesos permitidos</h3>
-                <table id="access-modal-table">
-                    <thead>
-                        <tr>
-                            <th>Email</th>
-                            <th>Fecha</th>
-                            <th>Por</th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody id="access-modal-list">
-                        <!-- Aquí se insertan dinámicamente los accesos -->
-                    </tbody>
-                </table>
-
-                <!-- Botón cerrar -->
-                <nav id="access-modal-actions" class="modal-actions">
-                    <button type="button" id="access-modal-close-btn" class="btn">Cerrar</button>
-                </nav>
-            </div>
-        </section>
+        <section id="recipe-card"></section>
     </main>
+
+    <!-- MODAL DE ACCESOS -->
+    <dialog id="access-modal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="access-modal-title">
+        <div id="access-modal-content" class="modal-content">
+            <h2 id="access-modal-title">Accesos</h2>
+
+            <!-- Formulario para dar acceso -->
+            <form id="access-modal-form">
+                <label for=""access-email>Email:</label>
+                <input type="email" id="access-email" required />
+                <button type="submit" id="access-modal-allow-btn">Dar acceso</button>
+            </form>
+
+            <!-- Lista de accesos permitidos -->
+            <h3>Accesos permitidos</h3>
+            <table id="access-modal-table">
+                <thead>
+                    <tr>
+                        <th scope="col">Email</th>
+                        <th scope="col">Fecha</th>
+                        <th scope="col">Por</th>
+                        <th scope="col"></th>
+                    </tr>
+                </thead>
+                <tbody id="access-modal-list">
+                    <!-- Aquí se insertan dinámicamente los accesos -->
+                </tbody>
+            </table>
+
+            <!-- Botón cerrar -->
+            <div id="access-modal-actions" class="modal-actions">
+                <button type="button" id="access-modal-close-btn" class="btn">Cerrar</button>
+            </div>
+        </div>
+    </dialog>
 </body>
 
 </html>

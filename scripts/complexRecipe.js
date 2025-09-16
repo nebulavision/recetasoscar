@@ -20,11 +20,6 @@ async function showModal() {
   }
 }
 
-function hideModal() {
-  accessModal.classList.add("hidden");
-  categoryForm.reset();
-}
-
 // Imágen
 const recipeImage = createElement("img", {
   attrs: { src: recipe.imagen_url, alt: recipe.titulo },
@@ -105,7 +100,7 @@ function createSubRecipeSection() {
 
 // Sub-recetas
 const subRecipesSection = createElement("section", {
-  attrs: { id: "sub-recipes" },
+  attrs: { id: "sub-recipes-section" },
   children: [
     createElement("h2", { text: "Elaboraciones necesarias" }),
     createSubRecipeSection(),
