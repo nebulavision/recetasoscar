@@ -7,3 +7,11 @@ export const createElement = (tag, { classList = [], text = "", attrs = {}, chil
 
     return element;
 };
+
+export function normalizeFileName(name) {
+  return name
+    .normalize('NFD')               // descompone los acentos
+    .replace(/[\u0300-\u036f]/g, '') // elimina los acentos
+    .replace(/\s+/g, '_')           // reemplaza todos los espacios por _
+    .replace(/[^a-zA-Z0-9._-]/g, ''); // elimina caracteres no válidos
+}

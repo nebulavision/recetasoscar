@@ -1,0 +1,123 @@
+/* ===== ESTILOS ESPECÍFICOS DE NEW RECIPE MODAL ===== */
+@import url('modals.css');
+
+#recipe-modal-content { 
+  max-width: 600px;
+  max-height: 80vh;
+  overflow-y: auto;
+  padding: 2rem; 
+}
+
+.btn {
+  margin-top: 10px;
+}
+
+/* ===== FORMULARIO CREAR RECETA ===== */
+#new-recipe-form label {
+  display: block;
+  margin-bottom: 1rem;
+  font-weight: 500;
+  color: #444;
+}
+
+#new-recipe-form input[type="text"],
+#new-recipe-form input[type="url"],
+#new-recipe-form textarea {
+  width: 100%;
+  margin-top: 0.5rem;
+  padding: 0.6rem;
+  border: 1px solid #ccc;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+}
+
+#new-recipe-form textarea {
+  min-height: 90px;
+  resize: vertical;
+}
+
+#new-recipe-form .checkbox-group {
+  margin: 1rem 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 500;
+}
+
+/* ===== SUBRECETAS ===== */
+
+#subrecipes-content {
+  margin-top: 1rem;
+  padding: 1rem;
+  background: #fdf6f6;
+  border-radius: 10px;
+  border: 1px dashed #ccc;
+}
+
+#subrecipes-list {
+  list-style: none;
+  padding: 0;
+  margin-top: 1rem;
+}
+
+#subrecipes-list li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 12px;
+  background: #f9f9f9;
+  border-radius: 8px;
+  margin-bottom: 8px;
+  border: 1px solid #eee;
+}
+
+#subrecipes-list button {
+  background: #ff4d4d;
+  border: none;
+  color: white;
+  border-radius: 6px;
+  padding: 5px 8px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+#subrecipes-list button:hover {
+  background: #e63939;
+}
+
+/* ===== MODAL SUBRECETA ===== */
+#subrecipe-modal .modal-content {
+  max-width: 500px;
+  width: 90%;
+}
+
+#subrecipe-search {
+  width: 100%;
+  padding: 0.6rem;
+  border: 1px solid #ccc;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  margin-top: 0.5rem;
+}
+
+#subrecipe-results {
+  list-style: none;
+  padding: 0;
+  margin-top: 1rem;
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+#subrecipe-results li {
+  padding: 8px 12px;
+  background: #fafafa;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  margin-bottom: 6px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+#subrecipe-results li:hover {
+  background: #f0f0f0;
+}

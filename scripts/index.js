@@ -1,15 +1,16 @@
 import { checkSession, isAdmin, signOut } from '../auth/auth.js';
 import { getCurrentCategoriesFor, getCurrentCategory, getRecipes, queryRecipe } from '../supabase/db.js';
 import { saveCategory } from './newCategoryModal.js';
+import { showRecipeModal } from './newRecipeModal.js';
 
 const grid = document.getElementById("grid-category");
 const breadcrumbs = document.getElementById("breadcrumbs");
 
-const categoryForm = document.getElementById("category-form");
 const searchInput = document.getElementById("search-input");
 const searchBtn = document.getElementById("search-btn");
-const modal = document.getElementById("category-modal");
-const cancelBtn = document.getElementById("category-cancel-btn");
+const categoryModal = document.getElementById("category-modal");
+const categoryForm = document.getElementById("category-form");
+const categoryCancelBtn = document.getElementById("category-cancel-btn");
 const logoutBtn = document.getElementById("logout-btn");
 const noRecipesContainer = document.getElementById("no-recipes");
 const noRecipesBackBtn = document.getElementById("btn-back");
@@ -34,12 +35,12 @@ async function init() {
 
 
 // ------------ NEW CATEGORY MODAL ------------------
-function showModal() {
-  modal.classList.remove("hidden");
+function showCategoryModal() {
+  categoryModal.classList.remove("hidden");
 }
 
-function hideModal() {
-  modal.classList.add("hidden");
+function hideCategoryModal() {
+  categoryModal.classList.add("hidden");
   categoryForm.reset();
 }
 
@@ -52,7 +53,8 @@ categoryForm.addEventListener("submit", async (e) => {
   saveCategory(categoryName, imageFile)
 });
 
-cancelBtn.addEventListener("click", hideModal);
+categoryCancelBtn.addEventListener("click", hideCategoryModal);
+
 
 // ------------------- BUSQUEDA ---------------------
 async function search() {
@@ -87,7 +89,7 @@ function createAddCategoryCard() {
             <a href="#" class="btn">Crear</a>
         </div>
     `;
-  addCard.querySelector("a").addEventListener("click", showModal);
+  addCard.querySelector("a").addEventListener("click", showCategoryModal);
   grid.appendChild(addCard);
 }
 
@@ -122,7 +124,7 @@ function createAddRecipeCard() {
             <a href="#" class="btn">Crear</a>
         </div>
     `;
-  addCard.querySelector("a").addEventListener("click", () => alert("TODO"));
+  addCard.querySelector("a").addEventListener("click", showRecipeModal);
   grid.appendChild(addCard);
 }
 

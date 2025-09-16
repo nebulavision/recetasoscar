@@ -1,28 +1,7 @@
-#access-modal {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0, 0, 0, 0.6);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 1000;
-}
+/* ===== ESTILOS ESPECÍFICOS DE ACCESS MODAL ===== */
+@import url('modals.css');
 
-#access-modal.hidden {
-  display: none;
-}
-
-#access-modal-content{
-  background: #fff;
-  padding: 2rem;
-  border-radius: 1.2rem;
-  width: 90%;
-  max-width: 750px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
-}
+#access-modal-content { max-width: 750px; }
 
 /* Animación suave al abrir */
 @keyframes fadeIn {
@@ -60,7 +39,7 @@
   font-weight: 600;
 }
 
-#access-modal-tabletd:last-child {
+#access-modal-table td:last-child {
   text-align: center;
 }
 
@@ -129,29 +108,18 @@
   align-self: flex-end;
 }
 
-#access-modal-actions {
-  display: flex;
-  justify-content: flex-end;
-  gap: 1rem;
-}
-
-#access-modal-actions .btn {
-  padding: 0.7rem 1.2rem;
-  border-radius: 10px;
-}
-
 #access-modal-close-btn {
-    margin-top: 10px;
+  margin-top: 10px;
 }
 
 /* Responsive */
 @media (max-width: 600px) {
-  .modal-content {
+  #access-modal-content {
     max-width: 95%;
     padding: 1.2rem;
   }
-  .tabla-accesos th,
-  .tabla-accesos td {
+  #access-modal-table th,
+  #access-modal-table td {
     font-size: 0.9rem;
     padding: 8px;
   }

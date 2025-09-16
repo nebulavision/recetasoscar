@@ -10,6 +10,7 @@
   <link rel="stylesheet" href="css/grid.css">
   <link rel="stylesheet" href="css/breadcrumbs.css">
   <link rel="stylesheet" href="css/newCategoryModal.css">
+  <link rel="stylesheet" href="css/newRecipeModal.css">
   <link rel="stylesheet" href="css/search.css">
 
   <script type="module" src="scripts/index.js"></script>
@@ -22,7 +23,7 @@
       <p>Explora nuestras deliciosas categorías</p>
     </div>
     <div>
-      <a id="logout-btn" class="btn">Cerrar sesión</a>
+      <a id="logout-btn">Cerrar sesión</a>
     </div>
     <!-- Cuadro de búsqueda -->
     <div class="search-container">
@@ -44,8 +45,8 @@
     </div>
 
     <!-- Modal Nueva Categoría -->
-    <div id="category-modal" class="hidden">
-      <div id="category-modal-content">
+    <div id="category-modal" class="modal hidden">
+      <div id="category-modal-content" class="modal-content">
         <h2>Nueva Categoría</h2>
         <form id="category-form">
           <label>
@@ -56,7 +57,7 @@
             Imagen:
             <input type="file" id="category-image" accept="image/*" required>
           </label>
-          <div id="category-modal-actions">
+          <div id="category-modal-actions" class="modal-actions">
             <button type="button" id="category-cancel-btn" class="btn secondary">Cancelar</button>
             <button type="submit" class="btn">Guardar</button>
           </div>
@@ -64,7 +65,77 @@
       </div>
     </div>
 
+    <!-- Modal Nueva Receta -->
+    <div id="recipe-modal" class="modal hidden">
+      <div id="recipe-modal-content" class="modal-content wide">
+        <h2>Nueva Receta</h2>
+        <form id="new-recipe-form">
+          <label>
+            Título:
+            <input type="text" id="new-recipe-title" required>
+          </label>
+
+          <label>
+            Ingredientes (uno por línea):
+            <textarea id="new-recipe-ingredients" placeholder="Ej: 200g de harina&#10;100g de azúcar"></textarea>
+          </label>
+
+          <label>
+            Pasos (uno por línea):
+            <textarea id="new-recipe-preparation" required placeholder="Ej: Mezclar ingredientes&#10;Hornear 30 min"></textarea>
+          </label>
+
+          <label>
+            Imagen:
+            <input type="file" id="new-recipe-image" accept="image/*">
+          </label>
+
+          <label>
+            Observaciones (opcional, una por línea):
+            <textarea id="new-recipe-observations"></textarea>
+          </label>
+
+          <label>
+            <input type="checkbox" id="new-recipe-is-complex">
+            Receta compleja
+          </label>
+
+          <label>
+            <input type="checkbox" id="new-recipe-elaboration-for">
+            Subreceta
+          </label>
+
+          <!-- 🔹 Sección solo visible si es receta compleja -->
+          <div id="subrecipes-content" class="hidden">
+            <label>Sub Recetas</label>
+            <button type="button" id="add-subrecipe-btn" class="btn secondary">➕ Añadir subreceta</button>
+            <ul id="subrecipes-list"></ul>
+          </div>
+
+          <div class="modal-actions">
+            <button type="button" id="new-recipe-cancel-btn" class="btn secondary">Cancelar</button>
+            <button type="submit" class="btn">Guardar</button>
+          </div>
+        </form>
+      </div>
     </div>
+
+    <!-- 🔹 Submodal para añadir subrecetas -->
+    <div id="subrecipe-modal" class="modal hidden">
+      <div id="subrecipe-modal-content" class="modal-content">
+        <h2>Añadir Subreceta</h2>
+        <label>
+          Buscar receta:
+          <input type="text" id="subrecipe-search" placeholder="Escribe un título...">
+        </label>
+        <ul id="subrecipe-results"></ul>
+
+        <div class="modal-actions">
+          <button type="button" id="subrecipe-modal-cancel-btn" class="btn secondary">Cerrar</button>
+        </div>
+      </div>
+    </div>
+
 
   </main>
 </body>

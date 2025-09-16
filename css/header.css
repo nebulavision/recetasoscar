@@ -26,10 +26,13 @@ header a {
 }
 
 #logout-btn {
+  position: absolute;
+  top: 5px;
+  right: 5px;
   padding: 12px 25px;
   border-radius: 15px;
   border: none;
-  background: #c0392b;
+  background: #b03426;
   color: white;
   font-weight: bold;
   cursor: pointer;

@@ -84,19 +84,39 @@ export async function getRecipe(recipeId) {
     }
 }
 
-export async function queryRecipe(query) {
+export async function queryRecipe(query, searchAll = false) {
     try {
-        const { data: recipes, error } = await supabase
+        let builder = supabase
             .from("recetas")
             .select("*")
-            .eq("is_for_complex_recipe", false)
             .ilike("titulo", `%${query}%`);
+
+        if (searchAll === false) {
+            builder = builder.eq("is_for_complex_recipe", false);
+        }
+
+        const { data: recipes, error } = await builder;
 
         if (error) throw error;
 
         return recipes;
     } catch (err) {
         console.error("Error cargando recetas:", err);
+    }
+}
+
+export async function insertRecipe(recipe) {
+    const { data, error } = await supabase
+        .from("recetas")
+        .insert([recipe])
+        .select("id");
+
+    if (error) {
+        console.error("Error insertando receta:", error);
+        alert("❌ No se pudo insertar la receta");
+        return null;
+    } else {
+        return data[0].id;
     }
 }
 
@@ -116,12 +136,12 @@ export async function getAccessForRecipe(recipeId) {
     }
 }
 
-export async function insertRecipePermission(recipeId, email, grantedBy){
+export async function insertRecipePermission(recipeId, email, grantedBy) {
     const { error } = await supabase.from("receta_permisos").insert([
-        { 
+        {
             receta_id: recipeId,
             email: email,
-            granted_by: grantedBy 
+            granted_by: grantedBy
         }
     ]);
 
@@ -134,7 +154,7 @@ export async function insertRecipePermission(recipeId, email, grantedBy){
     }
 }
 
-export async function deletePermission(permissionId){
+export async function deletePermission(permissionId) {
     const { error } = await supabase.from("receta_permisos")
         .delete()
         .eq('id', permissionId);
@@ -161,5 +181,22 @@ export async function getSubrecipesFor(recipeId) {
         return recipes.map(item => item.subreceta);
     } catch (err) {
         console.error("Error cargando subrecetas:", err);
+    }
+}
+
+export async function insertSubrecipe(recipeId, subrecipeId) {
+    const { error } = await supabase.from("subrecetas").insert([
+        {
+            receta_id: recipeId,
+            subreceta_id: subrecipeId
+        }
+    ]);
+
+    if (error) {
+        console.error("Error insertando subreceta:", error);
+        alert("❌ No se pudo insertar la subreceta");
+        return false;
+    } else {
+        return true;
     }
 }

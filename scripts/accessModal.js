@@ -30,13 +30,11 @@ async function renderAccess() {
     accessList.appendChild(row);
   });
 
-  // Asignar eventos de borrado
+
   document.querySelectorAll(".delete-access-btn").forEach((btn) => {
     btn.addEventListener("click", async (e) => {
       const idx = e.target.dataset.index;
       deletePermission(access[idx].id);
-
-      const userEmail = await getUserEmail();
 
       const subrecipes = await getSubrecipesFor(recipeId);
       for (const item of subrecipes) {
