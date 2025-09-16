@@ -58,6 +58,7 @@ export async function getRecipes(parentId) {
         const { data: recipes, error } = await supabase
             .from("recetas")
             .select("*")
+            .eq("is_for_complex_recipe", false)
             .eq("categoria_id", parentId);
 
         if (error) throw error;
@@ -88,6 +89,7 @@ export async function queryRecipe(query) {
         const { data: recipes, error } = await supabase
             .from("recetas")
             .select("*")
+            .eq("is_for_complex_recipe", false)
             .ilike("titulo", `%${query}%`);
 
         if (error) throw error;

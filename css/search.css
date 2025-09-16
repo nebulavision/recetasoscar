@@ -8,7 +8,7 @@
   padding: 5px;
   background: #fff;
   border-radius: 15px;
-  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
 }
 
 #search-input {
@@ -41,13 +41,44 @@
   background: #a93226;
 }
 
+#no-recipes {
+  text-align: center;
+  font-size: 1.1rem;
+  color: #777;
+  margin: 40px auto;
+  padding: 20px;
+  background: #fff;
+  border-radius: 15px;
+  max-width: 420px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  align-items: center;
+}
+
+#no-recipes.hidden {
+  display: none;
+}
+
+#no-recipes .btn.secondary {
+  background: #bbb;
+  color: #fff;
+}
+
+#no-recipes .btn.secondary:hover {
+  background: #bbb;
+  color: #fff;
+}
+
 @media (max-width: 500px) {
   .search-container {
     flex-direction: column;
     gap: 10px;
   }
 
-  #search-input, #search-btn {
+  #search-input,
+  #search-btn {
     width: 90%;
   }
 }
