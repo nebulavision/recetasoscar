@@ -1,5 +1,6 @@
 import { getRecipe } from "../supabase/db.js";
 import { getUserEmail, isAdmin} from '../auth/auth.js';
+import { createElement } from "./utils.js";
 
 const recipeId = new URLSearchParams(window.location.search).get("id");
 const [recipe] = await getRecipe(recipeId);
@@ -9,16 +10,6 @@ const accessModal = document.getElementById("access-modal");
 const isAdminFlag = await isAdmin(await getUserEmail());
 
 document.title = recipe.titulo;
-
-const createElement = (tag, { classList = [], text = "", attrs = {}, children = [] } = {}) => {
-    const element = document.createElement(tag);
-    if (classList.length) element.classList.add(...classList);
-    if (text) element.innerText = text;
-    Object.entries(attrs).forEach(([k, v]) => element.setAttribute(k, v));
-    if (children.length) element.append(...children);
-
-    return element;
-};
 
 async function showModal() {
   if(isAdminFlag){

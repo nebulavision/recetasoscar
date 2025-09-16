@@ -80,60 +80,67 @@ function createCategoryCard(category) {
 }
 
 async function loadCategories() {
-    const categories = await getCurrentCategoriesFor(parentId);
+  const categories = await getCurrentCategoriesFor(parentId);
 
-    grid.innerHTML = "";
+  grid.innerHTML = "";
 
-    if(await isAdmin()){
-        createAddCategoryCard();
-        createAddRecipeCard();
-    }
+  if (await isAdmin()) {
+    createAddCategoryCard();
+    createAddRecipeCard();
+  }
 
-    if (categories.length) {
-        categories.forEach(createCategoryCard);
-    } else if (parentId) {
-        loadRecipes();
-    }
+  if (categories.length) {
+    categories.forEach(createCategoryCard);
+  }
+  if (parentId) {
+    loadRecipes();
+  }
 }
 
 // ------------------- RECETAS -------------------
 function createAddRecipeCard() {
-    const addCard = document.createElement("div");
-    addCard.className = "card add-card";
-    addCard.innerHTML = `
+  const addCard = document.createElement("div");
+  addCard.className = "card add-card";
+  addCard.innerHTML = `
         <div class="card-content add-content">
             <h2>➕ Nueva receta</h2>
             <a href="#" class="btn">Crear</a>
         </div>
     `;
-    addCard.querySelector("a").addEventListener("click", () => alert("TODO"));
-    grid.appendChild(addCard);
+  addCard.querySelector("a").addEventListener("click", () => alert("TODO"));
+  grid.appendChild(addCard);
 }
 
 function createRecipeCard(recipe) {
-    const card = document.createElement("div");
-    card.className = "card";
-    card.innerHTML = `
-        <img src="${recipe.imagen_url || "https://source.unsplash.com/400x300/?food"}" alt="${recipe.titulo}">
+  const card = document.createElement("div");
+  card.className = "card";
+  const redirectTo = recipe.is_complex
+    ? `complexRecipe.html?id=${recipe.id}`
+    : `recipe.html?id=${recipe.id}`;
+
+  card.innerHTML = `
+        <img src="${
+          recipe.imagen_url || "https://source.unsplash.com/400x300/?food"
+        }" alt="${recipe.titulo}">
         <div class="card-content">
             <h2>${recipe.titulo}</h2>
-            <a href="recipe.html?id=${recipe.id}" class="btn">Ver receta</a>
+            <a href="${redirectTo}" class="btn">Ver receta</a>
         </div>
     `;
 
-    grid.appendChild(card);
+  grid.appendChild(card);
 }
 
 async function loadRecipes(recipesList) {
-    let recipes;
+  let recipes;
 
-    if (recipesList && recipesList.length > 0) {
-        recipes = recipesList;
-    } else {
-        recipes = await getRecipes(parentId);
-    }
+  if (recipesList && recipesList.length > 0) {
+    recipes = recipesList;
+  } else {
+    recipes = await getRecipes(parentId);
+  }
 
-    recipes.forEach(createRecipeCard);
+  recipes.forEach(createRecipeCard);
 }
 
 // ------------------- BREADCRUMBS -------------------

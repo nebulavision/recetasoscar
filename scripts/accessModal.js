@@ -1,5 +1,10 @@
 import { getUserEmail } from "../auth/auth.js";
-import { deletePermission, getAccessForRecipe, insertRecipePermission } from "../supabase/db.js";
+import {
+  deletePermission,
+  getAccessForRecipe,
+  getSubrecipesFor,
+  insertRecipePermission,
+} from "../supabase/db.js";
 
 const accessList = document.getElementById("access-modal-list");
 const accessForm = document.getElementById("access-modal-form");
@@ -26,10 +31,20 @@ async function renderAccess() {
   });
 
   // Asignar eventos de borrado
-  document.querySelectorAll(".delete-access-btn").forEach(btn => {
-    btn.addEventListener("click", (e) => {
+  document.querySelectorAll(".delete-access-btn").forEach((btn) => {
+    btn.addEventListener("click", async (e) => {
       const idx = e.target.dataset.index;
-      deletePermission(access[idx].id)
+      deletePermission(access[idx].id);
+
+      const userEmail = await getUserEmail();
+
+      const subrecipes = await getSubrecipesFor(recipeId);
+      for (const item of subrecipes) {
+        const [subrecipeAccess] = await getAccessForRecipe(item.id);
+
+        await deletePermission(subrecipeAccess.id);
+      }
+
       renderAccess();
     });
   });
@@ -41,7 +56,14 @@ accessForm.addEventListener("submit", async (e) => {
   const email = document.getElementById("access-email").value;
   if (!email) return;
 
-  await insertRecipePermission(recipeId, email, await getUserEmail());
+  const userEmail = await getUserEmail();
+
+  await insertRecipePermission(recipeId, email, userEmail);
+
+  const subrecipes = await getSubrecipesFor(recipeId);
+  for (const item of subrecipes) {
+    await insertRecipePermission(item.id, email, userEmail);
+  }
 
   document.getElementById("access-email").value = "";
   renderAccess();

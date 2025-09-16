@@ -145,3 +145,19 @@ export async function deletePermission(permissionId){
         return true;
     }
 }
+
+// --------------- SUBRECETAS ----------------------
+export async function getSubrecipesFor(recipeId) {
+    try {
+        const { data: recipes, error } = await supabase
+            .from("subrecetas")
+            .select("subreceta:subreceta_id(*)")
+            .eq("receta_id", recipeId);
+
+        if (error) throw error;
+
+        return recipes.map(item => item.subreceta);
+    } catch (err) {
+        console.error("Error cargando subrecetas:", err);
+    }
+}
